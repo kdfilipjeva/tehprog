@@ -143,67 +143,67 @@ int main() {
         std::cin >> data;
         list.addAtEnd(data);
     }
-do {
-        std::cout << "\nВыберите действие:\n";
-        std::cout << "1. Добавить элемент в начало\n";
-        std::cout << "2. Добавить элемент по индексу\n";
-        std::cout << "3. Добавить элемент в конец\n";
-        std::cout << "4. Удалить первый элемент\n";
-        std::cout << "5. Удалить последний элемент\n";
-        std::cout << "6. Удалить элемент по индексу\n";
-        std::cout << "7. Обновить элемент по индексу\n";
-        std::cout << "8. Найти элемент по индексу\n";
-        std::cout << "9. Вывести список\n";
-        std::cout << "0. Выход\n";
-        std::cin >> choice;
-
-        switch (choice) {
-        case 1:
-            std::cout << "Введите элемент: ";
-            std::cin >> data;
-            list.addAtBeginning(data);
-            break;
-        case 2:
-            std::cout << "Введите индекс и элемент: ";
-            std::cin >> index >> data;
-            list.addAtIndex(index, data);
-            break;
-        case 3:
-            std::cout << "Введите элемент: ";
-            std::cin >> data;
-            list.addAtEnd(data);
-            break;
-        case 4:
-            list.deleteFirst();
-            break;
-        case 5:
-            list.deleteLast();
-            break;
-        case 6:
-            std::cout << "Введите индекс: ";
-            std::cin >> index;
-            list.deleteAtIndex(index);
-            break;
-        case 7:
-            std::cout << "Введите индекс и новый элемент: ";
-            std::cin >> index >> data;
-            list.updateAtIndex(index, data);
-            break;
-        case 8:
-            std::cout << "Введите индекс: ";
-            std::cin >> index;
-            std::cout << "Элемент по индексу " << index << ": " << list.findAtIndex(index) << std::endl;
-            break;
-        case 9:
-            list.printList();
-            break;
-        }
-
-        if (choice != 0 && choice != 8 && choice != 9) {
-            std::cout << "Промежуточный результат: ";
-            list.printList();
-        }
-    } while (choice != 0);
-
-    return 0;
-}
+    do {
+            std::cout << "\nВыберите действие:\n";
+            std::cout << "1. Добавить элемент в начало\n";
+            std::cout << "2. Добавить элемент по индексу\n";
+            std::cout << "3. Добавить элемент в конец\n";
+            std::cout << "4. Удалить первый элемент\n";
+            std::cout << "5. Удалить последний элемент\n";
+            std::cout << "6. Удалить элемент по индексу\n";
+            std::cout << "7. Обновить элемент по индексу\n";
+            std::cout << "8. Найти элемент по индексу\n";
+            std::cout << "9. Вывести список\n";
+            std::cout << "0. Выход\n";
+            std::cin >> choice;
+    
+            switch (choice) {
+            case 1:
+                std::cout << "Введите элемент: ";
+                std::cin >> data;
+                list.addAtBeginning(data);
+                break;
+            case 2:
+                std::cout << "Введите индекс и элемент: ";
+                std::cin >> index >> data;
+                list.addAtIndex(index, data);
+                break;
+            case 3:
+                std::cout << "Введите элемент: ";
+                std::cin >> data;
+                list.addAtEnd(data);
+                break;
+            case 4:
+                list.deleteFirst();
+                break;
+            case 5:
+                list.deleteLast();
+                break;
+            case 6:
+                std::cout << "Введите индекс: ";
+                std::cin >> index;
+                list.deleteAtIndex(index);
+                break;
+            case 7:
+                std::cout << "Введите индекс и новый элемент: ";
+                std::cin >> index >> data;
+                list.updateAtIndex(index, data);
+                break;
+            case 8:
+                std::cout << "Введите индекс: ";
+                std::cin >> index;
+                std::cout << "Элемент по индексу " << index << ": " << list.findAtIndex(index) << std::endl;
+                break;
+            case 9:
+                list.printList();
+                break;
+            }
+    
+            if (choice != 0 && choice != 8 && choice != 9) {
+                std::cout << "Промежуточный результат: ";
+                list.printList();
+            }
+        } while (choice != 0);
+    
+        return 0;
+    }
