@@ -136,41 +136,41 @@ int main() {
     LinkedList list;
     int data, index, choice, size;
 
-    std::cout << "Ââåäèòå êîëè÷åñòâî ýëåìåíòîâ â ñïèñêå: ";
+    std::cout << "Ã‚Ã¢Ã¥Ã¤Ã¨Ã²Ã¥ ÃªÃ®Ã«Ã¨Ã·Ã¥Ã±Ã²Ã¢Ã® Ã½Ã«Ã¥Ã¬Ã¥Ã­Ã²Ã®Ã¢ Ã¢ Ã±Ã¯Ã¨Ã±ÃªÃ¥: ";
     std::cin >> size;
-    std::cout << "Ââåäèòå ýëåìåíòû ñïèñêà:\n";
+    std::cout << "Ã‚Ã¢Ã¥Ã¤Ã¨Ã²Ã¥ Ã½Ã«Ã¥Ã¬Ã¥Ã­Ã²Ã» Ã±Ã¯Ã¨Ã±ÃªÃ :\n";
     for (int i = 0; i < size; i++) {
         std::cin >> data;
         list.addAtEnd(data);
     }
 
     do {
-        std::cout << "\nÂûáåðèòå äåéñòâèå:\n";
-        std::cout << "1. Äîáàâèòü ýëåìåíò â íà÷àëî\n";
-        std::cout << "2. Äîáàâèòü ýëåìåíò ïî èíäåêñó\n";
-        std::cout << "3. Äîáàâèòü ýëåìåíò â êîíåö\n";
-        std::cout << "4. Óäàëèòü ïåðâûé ýëåìåíò\n";
-        std::cout << "5. Óäàëèòü ïîñëåäíèé ýëåìåíò\n";
-        std::cout << "6. Óäàëèòü ýëåìåíò ïî èíäåêñó\n";
-        std::cout << "7. Îáíîâèòü ýëåìåíò ïî èíäåêñó\n";
-        std::cout << "8. Íàéòè ýëåìåíò ïî èíäåêñó\n";
-        std::cout << "9. Âûâåñòè ñïèñîê\n";
-        std::cout << "0. Âûõîä\n";
+        std::cout << "\nÃ‚Ã»Ã¡Ã¥Ã°Ã¨Ã²Ã¥ Ã¤Ã¥Ã©Ã±Ã²Ã¢Ã¨Ã¥:\n";
+        std::cout << "1. Ã„Ã®Ã¡Ã Ã¢Ã¨Ã²Ã¼ Ã½Ã«Ã¥Ã¬Ã¥Ã­Ã² Ã¢ Ã­Ã Ã·Ã Ã«Ã®\n";
+        std::cout << "2. Ã„Ã®Ã¡Ã Ã¢Ã¨Ã²Ã¼ Ã½Ã«Ã¥Ã¬Ã¥Ã­Ã² Ã¯Ã® Ã¨Ã­Ã¤Ã¥ÃªÃ±Ã³\n";
+        std::cout << "3. Ã„Ã®Ã¡Ã Ã¢Ã¨Ã²Ã¼ Ã½Ã«Ã¥Ã¬Ã¥Ã­Ã² Ã¢ ÃªÃ®Ã­Ã¥Ã¶\n";
+        std::cout << "4. Ã“Ã¤Ã Ã«Ã¨Ã²Ã¼ Ã¯Ã¥Ã°Ã¢Ã»Ã© Ã½Ã«Ã¥Ã¬Ã¥Ã­Ã²\n";
+        std::cout << "5. Ã“Ã¤Ã Ã«Ã¨Ã²Ã¼ Ã¯Ã®Ã±Ã«Ã¥Ã¤Ã­Ã¨Ã© Ã½Ã«Ã¥Ã¬Ã¥Ã­Ã²\n";
+        std::cout << "6. Ã“Ã¤Ã Ã«Ã¨Ã²Ã¼ Ã½Ã«Ã¥Ã¬Ã¥Ã­Ã² Ã¯Ã® Ã¨Ã­Ã¤Ã¥ÃªÃ±Ã³\n";
+        std::cout << "7. ÃŽÃ¡Ã­Ã®Ã¢Ã¨Ã²Ã¼ Ã½Ã«Ã¥Ã¬Ã¥Ã­Ã² Ã¯Ã® Ã¨Ã­Ã¤Ã¥ÃªÃ±Ã³\n";
+        std::cout << "8. ÃÃ Ã©Ã²Ã¨ Ã½Ã«Ã¥Ã¬Ã¥Ã­Ã² Ã¯Ã® Ã¨Ã­Ã¤Ã¥ÃªÃ±Ã³\n";
+        std::cout << "9. Ã‚Ã»Ã¢Ã¥Ã±Ã²Ã¨ Ã±Ã¯Ã¨Ã±Ã®Ãª\n";
+        std::cout << "0. Ã‚Ã»ÃµÃ®Ã¤\n";
         std::cin >> choice;
 
         switch (choice) {
         case 1:
-            std::cout << "Ââåäèòå ýëåìåíò: ";
+            std::cout << "Ã‚Ã¢Ã¥Ã¤Ã¨Ã²Ã¥ Ã½Ã«Ã¥Ã¬Ã¥Ã­Ã²: ";
             std::cin >> data;
             list.addAtBeginning(data);
             break;
         case 2:
-            std::cout << "Ââåäèòå èíäåêñ è ýëåìåíò: ";
+            std::cout << "Ã‚Ã¢Ã¥Ã¤Ã¨Ã²Ã¥ Ã¨Ã­Ã¤Ã¥ÃªÃ± Ã¨ Ã½Ã«Ã¥Ã¬Ã¥Ã­Ã²: ";
             std::cin >> index >> data;
             list.addAtIndex(index, data);
             break;
         case 3:
-            std::cout << "Ââåäèòå ýëåìåíò: ";
+            std::cout << "Ã‚Ã¢Ã¥Ã¤Ã¨Ã²Ã¥ Ã½Ã«Ã¥Ã¬Ã¥Ã­Ã²: ";
             std::cin >> data;
             list.addAtEnd(data);
             break;
@@ -181,19 +181,19 @@ int main() {
             list.deleteLast();
             break;
         case 6:
-            std::cout << "Ââåäèòå èíäåêñ: ";
+            std::cout << "Ã‚Ã¢Ã¥Ã¤Ã¨Ã²Ã¥ Ã¨Ã­Ã¤Ã¥ÃªÃ±: ";
             std::cin >> index;
             list.deleteAtIndex(index);
             break;
         case 7:
-            std::cout << "Ââåäèòå èíäåêñ è íîâûé ýëåìåíò: ";
+            std::cout << "Ã‚Ã¢Ã¥Ã¤Ã¨Ã²Ã¥ Ã¨Ã­Ã¤Ã¥ÃªÃ± Ã¨ Ã­Ã®Ã¢Ã»Ã© Ã½Ã«Ã¥Ã¬Ã¥Ã­Ã²: ";
             std::cin >> index >> data;
             list.updateAtIndex(index, data);
             break;
         case 8:
-            std::cout << "Ââåäèòå èíäåêñ: ";
+            std::cout << "Ã‚Ã¢Ã¥Ã¤Ã¨Ã²Ã¥ Ã¨Ã­Ã¤Ã¥ÃªÃ±: ";
             std::cin >> index;
-            std::cout << "Ýëåìåíò ïî èíäåêñó " << index << ": " << list.findAtIndex(index) << std::endl;
+            std::cout << "ÃÃ«Ã¥Ã¬Ã¥Ã­Ã² Ã¯Ã® Ã¨Ã­Ã¤Ã¥ÃªÃ±Ã³ " << index << ": " << list.findAtIndex(index) << std::endl;
             break;
         case 9:
             list.printList();
@@ -201,11 +201,10 @@ int main() {
         }
 
         if (choice != 0 && choice != 8 && choice != 9) {
-            std::cout << "Ïðîìåæóòî÷íûé ðåçóëüòàò: ";
+            std::cout << "ÃÃ°Ã®Ã¬Ã¥Ã¦Ã³Ã²Ã®Ã·Ã­Ã»Ã© Ã°Ã¥Ã§Ã³Ã«Ã¼Ã²Ã Ã²: ";
             list.printList();
         }
     } while (choice != 0);
 
     return 0;
 }
-
