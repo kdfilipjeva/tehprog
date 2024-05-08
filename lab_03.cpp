@@ -1,215 +1,256 @@
-#include <SFML/Graphics.hpp>
 #include <cmath>
+#include <iostream>
+#include <vector>
 
-class Point {
-protected:
-    float x, y;
-    float angle;
-
+class GeometricObject {
 public:
-    Point(float x, float y) : x(x), y(y), angle(0) {}
-    virtual ~Point() {}
-
-    virtual void draw(sf::RenderWindow& window) const = 0;
-    virtual void move(float dx, float dy) { x += dx; y += dy; }
-    virtual void rotate(float degrees) { angle += degrees; }
-    virtual sf::FloatRect getGlobalBounds() const = 0;
+    virtual std::vector<std::pair<int, int>> getPoints() = 0;
+    virtual void display() = 0;
+    virtual void remove() = 0;
+    virtual void move(int dx, int dy) = 0;
+    virtual void rotate(double angle) = 0;
 };
 
-class Line : public Point {
-protected:
-    float x2, y2;
-
+class Point : public GeometricObject {
 public:
-    Line(float x1, float y1, float x2, float y2) : Point(x1, y1), x2(x2), y2(y2) {}
+    int x, y;
+    Point(int x, int y) : x(x), y(y) {}
+    virtual std::vector<std::pair<int, int>> getPoints() override { return {{x, y}}; }
+    virtual void display() override { std::cout << "Point (" << x << ", " << y << ")" << std::endl; }
+    virtual void remove() override { std::cout << "Removing point (" << x << ", " << y << ")" << std::endl; }
+    virtual void move(int dx, int dy) override { x += dx; y += dy; }
+    virtual void rotate(double angle) override {
+        double rad = angle * M_PI / 180.0;
+        int newX = x * std::cos(rad) - y * std::sin(rad);
+        int newY = x * std::sin(rad) + y * std::cos(rad);
+        x = newX;
+        y = newY;
+    }
+};
 
-    void draw(sf::RenderWindow& window) const override {
-        sf::Vertex line[] = {
-                sf::Vertex(sf::Vector2f(x, y)),
-                sf::Vertex(sf::Vector2f(x2, y2))
+class Line : public GeometricObject {
+protected:
+    Point start, end;
+public:
+    Line(int x1, int y1, int x2, int y2) : start(x1, y1), end(x2, y2) {}
+    virtual std::vector<std::pair<int, int>> getPoints() override { return {std::make_pair(start.x, start.y), std::make_pair(end.x, end.y)}; }
+    virtual void display() override {
+        std::cout << "Line from (" << start.x << ", " << start.y << ") to (" << end.x << ", " << end.y << ")" << std::endl;
+        for (auto& point : getPoints()) {
+            std::cout << "  Point (" << point.first << ", " << point.second << ")" << std::endl;
+        }
+    }
+    virtual void remove() override {
+        std::cout << "Removing line from (" << start.x << ", " << start.y << ") to (" << end.x << ", " << end.y << ")" << std::endl;
+    }
+    virtual void move(int dx, int dy) override {
+        start.move(dx, dy);
+        end.move(dx, dy);
+    }
+    virtual void rotate(double angle) override {
+        start.rotate(angle);
+        end.rotate(angle);
+        std::cout << "Line after rotation:" << std::endl;
+        for (auto& point : getPoints()) {
+            std::cout << "  Point (" << point.first << ", " << point.second << ")" << std::endl;
+        }
+    }
+};
+
+class Rectangle : public GeometricObject {
+protected:
+    Point topLeft;
+    int width, height;
+public:
+    Rectangle(int x, int y, int w, int h) : topLeft(x, y), width(w), height(h) {}
+    virtual std::vector<std::pair<int, int>> getPoints() override {
+        return {
+                std::make_pair(topLeft.x, topLeft.y),
+                std::make_pair(topLeft.x + width, topLeft.y),
+                std::make_pair(topLeft.x + width, topLeft.y + height),
+                std::make_pair(topLeft.x, topLeft.y + height)
         };
-        window.draw(line, 2, sf::Lines);
     }
-
-    void move(float dx, float dy) override {
-        Point::move(dx, dy);
-        x2 += dx; y2 += dy;
+    virtual void display() override {
+        std::cout << "Rectangle with top-left (" << topLeft.x << ", " << topLeft.y << "), width " << width << ", and height " << height << std::endl;
+        for (auto& point : getPoints()) {
+            std::cout << "  Point (" << point.first << ", " << point.second << ")" << std::endl;
+        }
     }
-
-    sf::FloatRect getGlobalBounds() const override {
-        float minX = std::min(x, x2);
-        float minY = std::min(y, y2);
-        float maxX = std::max(x, x2);
-        float maxY = std::max(y, y2);
-        return sf::FloatRect(minX, minY, maxX - minX, maxY - minY);
+    virtual void remove() override {
+        std::cout << "Removing rectangle with top-left (" << topLeft.x << ", " << topLeft.y << "), width " << width << ", and height " << height << std::endl;
+    }
+    virtual void move(int dx, int dy) override {
+        topLeft.move(dx, dy);
+    }
+    virtual void rotate(double angle) override {
+        for (auto& point : getPoints()) {
+            Point p(point.first, point.second);
+            p.rotate(angle);
+            std::cout << "  Point (" << p.x << ", " << p.y << ")" << std::endl;
+        }
     }
 };
 
-class Rectangle : virtual public Point {
+class Rhombus : public GeometricObject {
 protected:
-    float width, height;
-
+    Point center;
+    int width, height;
 public:
-    Rectangle(float x, float y, float width, float height) : Point(x, y), width(width), height(height) {}
-
-    void draw(sf::RenderWindow& window) const override {
-        sf::RectangleShape rectangle(sf::Vector2f(width, height));
-        rectangle.setPosition(x, y);
-        rectangle.setFillColor(sf::Color::Blue);
-        rectangle.setOrigin(width / 2, height / 2);
-        rectangle.setRotation(angle);
-        window.draw(rectangle);
+    Rhombus(int x, int y, int w, int h) : center(x, y), width(w), height(h) {}
+    virtual std::vector<std::pair<int, int>> getPoints() override {
+        return {
+                std::make_pair(center.x - width / 2, center.y),
+                std::make_pair(center.x, center.y + height / 2),
+                std::make_pair(center.x + width / 2, center.y),
+                std::make_pair(center.x, center.y - height / 2)
+        };
     }
-
-    sf::FloatRect getGlobalBounds() const override {
-        sf::RectangleShape rectangle(sf::Vector2f(width, height));
-        rectangle.setPosition(x, y);
-        rectangle.setOrigin(width / 2, height / 2);
-        rectangle.setRotation(angle);
-        return rectangle.getGlobalBounds();
+    virtual void display() override {
+        std::cout << "Rhombus with center (" << center.x << ", " << center.y << "), width " << width << ", and height " << height << std::endl;
+        for (auto& point : getPoints()) {
+            std::cout << "  Point (" << point.first << ", " << point.second << ")" << std::endl;
+        }
+    }
+    virtual void remove() override {
+        std::cout << "Removing rhombus with center (" << center.x << ", " << center.y << "), width " << width << ", and height " << height << std::endl;
+    }
+    virtual void move(int dx, int dy) override {
+        center.move(dx, dy);
+    }
+    virtual void rotate(double angle) override {
+        for (auto& point : getPoints()) {
+            Point p(point.first, point.second);
+            p.rotate(angle);
+            std::cout << "  Point (" << p.x << ", " << p.y << ")" << std::endl;
+        }
     }
 };
 
-class Square : virtual public Rectangle {
-public:
-    Square(float x, float y, float size) : Point(x, y), Rectangle(x, y, size, size) {}
-
-    void draw(sf::RenderWindow& window) const override {
-        sf::RectangleShape square(sf::Vector2f(width, height));
-        square.setPosition(x, y);
-        square.setFillColor(sf::Color::Red);
-        square.setOrigin(width / 2, height / 2);
-        square.setRotation(angle);
-        window.draw(square);
-    }
-
-    sf::FloatRect getGlobalBounds() const override {
-        return Rectangle::getGlobalBounds();
-    }
-};
-
-class Rhombus : virtual public Point {
+class Square : public virtual GeometricObject {
 protected:
-    float diagonal1, diagonal2;
-
+    Point topLeft;
+    int size;
 public:
-    Rhombus(float x, float y, float diagonal1, float diagonal2) : Point(x, y), diagonal1(diagonal1), diagonal2(diagonal2) {}
-
-    void draw(sf::RenderWindow& window) const override {
-        sf::ConvexShape rhombus(4);
-        rhombus.setPoint(0, sf::Vector2f(0, -diagonal2 / 2));
-        rhombus.setPoint(1, sf::Vector2f(diagonal1 / 2, 0));
-        rhombus.setPoint(2, sf::Vector2f(0, diagonal2 / 2));
-        rhombus.setPoint(3, sf::Vector2f(-diagonal1 / 2, 0));
-        rhombus.setPosition(x, y);
-        rhombus.setFillColor(sf::Color::Green);
-        rhombus.setOrigin(0, 0);
-        rhombus.setRotation(angle);
-        window.draw(rhombus);
+    Square(int x, int y, int size) : topLeft(x, y), size(size) {}
+    virtual std::vector<std::pair<int, int>> getPoints() override {
+        return {
+                std::make_pair(topLeft.x, topLeft.y),
+                std::make_pair(topLeft.x + size, topLeft.y),
+                std::make_pair(topLeft.x + size, topLeft.y + size),
+                std::make_pair(topLeft.x, topLeft.y + size)
+        };
     }
-
-    sf::FloatRect getGlobalBounds() const override {
-        sf::ConvexShape rhombus(4);
-        rhombus.setPoint(0, sf::Vector2f(0, -diagonal2 / 2));
-        rhombus.setPoint(1, sf::Vector2f(diagonal1 / 2, 0));
-        rhombus.setPoint(2, sf::Vector2f(0, diagonal2 / 2));
-        rhombus.setPoint(3, sf::Vector2f(-diagonal1 / 2, 0));
-        rhombus.setPosition(x, y);
-        rhombus.setOrigin(0, 0);
-        rhombus.setRotation(angle);
-        return rhombus.getGlobalBounds();
+    virtual void display() override {
+        std::cout << "Square with top-left (" << topLeft.x << ", " << topLeft.y << ") and size " << size << std::endl;
+        for (auto& point : getPoints()) {
+            std::cout << "  Point (" << point.first << ", " << point.second << ")" << std::endl;
+        }
+    }
+    virtual void remove() override {
+        std::cout << "Removing square with top-left (" << topLeft.x << ", " << topLeft.y << ") and size " << size << std::endl;
+    }
+    virtual void move(int dx, int dy) override {
+        topLeft.move(dx, dy);
+    }
+    virtual void rotate(double angle) override {
+        for (auto& point : getPoints()) {
+            Point p(point.first, point.second);
+            p.rotate(angle);
+            std::cout << "  Point (" << p.x << ", " << p.y << ")" << std::endl;
+        }
     }
 };
 
-class Parallelogram : public Rectangle, public Rhombus {
+class Parallelogram : public virtual GeometricObject {
+protected:
+    Point topLeft;
+    int width, height;
 public:
-    Parallelogram(float x, float y, float width, float height, float angle) :
-            Point(x, y),
-            Rectangle(x, y, width, height),
-            Rhombus(x, y, std::sqrt(width * width + height * height), std::sqrt(width * width + height * height)) {}
-
-    void draw(sf::RenderWindow& window) const override {
-        sf::ConvexShape parallelogram(4);
-        parallelogram.setPoint(0, sf::Vector2f(0, 0));
-        parallelogram.setPoint(1, sf::Vector2f(width, 0));
-        parallelogram.setPoint(2, sf::Vector2f(width - height, height));
-        parallelogram.setPoint(3, sf::Vector2f(-height, height));
-        parallelogram.setPosition(x, y);
-        parallelogram.setFillColor(sf::Color::Yellow);
-        parallelogram.setOrigin(width / 2, height / 2);
-        parallelogram.setRotation(angle);
-        window.draw(parallelogram);
+    Parallelogram(int x, int y, int w, int h) : topLeft(x, y), width(w), height(h) {}
+    virtual std::vector<std::pair<int, int>> getPoints() override {
+        return {
+                std::make_pair(topLeft.x, topLeft.y),
+                std::make_pair(topLeft.x + width, topLeft.y),
+                std::make_pair(topLeft.x + width, topLeft.y + height),
+                std::make_pair(topLeft.x, topLeft.y + height)
+        };
     }
-
-    sf::FloatRect getGlobalBounds() const override {
-        sf::ConvexShape parallelogram(4);
-        parallelogram.setPoint(0, sf::Vector2f(0, 0));
-        parallelogram.setPoint(1, sf::Vector2f(width, 0));
-        parallelogram.setPoint(2, sf::Vector2f(width - height, height));
-        parallelogram.setPoint(3, sf::Vector2f(-height, height));
-        parallelogram.setPosition(x, y);
-        parallelogram.setOrigin(width / 2, height / 2);
-        parallelogram.setRotation(angle);
-        return parallelogram.getGlobalBounds();
+    virtual void display() override {
+        std::cout << "Parallelogram with top-left (" << topLeft.x << ", " << topLeft.y << "), width " << width << ", and height " << height << std::endl;
+        for (auto& point : getPoints()) {
+            std::cout << "  Point (" << point.first << ", " << point.second << ")" << std::endl;
+        }
+    }
+    virtual void remove() override {
+        std::cout << "Removing parallelogram with top-left (" << topLeft.x << ", " << topLeft.y << "), width " << width << ", and height " << height << std::endl;
+    }
+    virtual void move(int dx, int dy) override {
+        topLeft.move(dx, dy);
+    }
+    virtual void rotate(double angle) override {
+        for (auto& point : getPoints()) {
+            Point p(point.first, point.second);
+            p.rotate(angle);
+            std::cout << "  Point (" << p.x << ", " << p.y << ")" << std::endl;
+        }
     }
 };
 
 int main() {
-    sf::RenderWindow window(sf::VideoMode(800, 600), "Geometry");
+    int choice, action;
+    GeometricObject* obj = nullptr;
 
-    Line line(100, 100, 200, 200);
-    Rectangle rectangle(300, 100, 150, 100);
-    Square square(500, 100, 100);
-    Rhombus rhombus(100, 300, 100, 150);
-    Parallelogram parallelogram(300, 300, 200, 100, 30);
+    std::cout << "Choose a geometric object:\n";
+    std::cout << "1. Point\n2. Line\n3. Rectangle\n4. Rhombus\n5. Square\n6. Parallelogram\n";
+    std::cin >> choice;
 
-    Point* selectedShape = nullptr;
-
-    while (window.isOpen()) {
-        sf::Event event;
-        while (window.pollEvent(event)) {if (event.type == sf::Event::Closed)
-                window.close();
-            else if (event.type == sf::Event::MouseButtonPressed) {
-                if (event.mouseButton.button == sf::Mouse::Left) {
-                    sf::Vector2f mousePosition(event.mouseButton.x, event.mouseButton.y);
-                    if (rectangle.getGlobalBounds().contains(mousePosition))
-                        selectedShape = &rectangle;
-                    else if (square.getGlobalBounds().contains(mousePosition))
-                        selectedShape = &square;
-                    else if (rhombus.getGlobalBounds().contains(mousePosition))
-                        selectedShape = &rhombus;
-                    else if (parallelogram.getGlobalBounds().contains(mousePosition))
-                        selectedShape = &parallelogram;
-                }
-            }
-            else if (event.type == sf::Event::KeyPressed) {
-                if (selectedShape != nullptr) {
-                    if (event.key.code == sf::Keyboard::Left)
-                        selectedShape->move(-10, 0);
-                    else if (event.key.code == sf::Keyboard::Right)
-                        selectedShape->move(10, 0);
-                    else if (event.key.code == sf::Keyboard::Up)
-                        selectedShape->move(0, -10);
-                    else if (event.key.code == sf::Keyboard::Down)
-                        selectedShape->move(0, 10);
-                    else if (event.key.code == sf::Keyboard::R)
-                        selectedShape->rotate(10);
-                    else if (event.key.code == sf::Keyboard::E)
-                        selectedShape->rotate(-10);
-                }
-            }
-        }
-
-        window.clear(sf::Color::White);
-
-        line.draw(window);
-        rectangle.draw(window);
-        square.draw(window);
-        rhombus.draw(window);
-        parallelogram.draw(window);
-
-        window.display();
+    switch (choice) {
+        case 1:
+            obj = new Point(100, 100);
+            break;
+        case 2:
+            obj = new Line(50, 50, 100, 100);
+            break;
+        case 3:
+            obj = new Rectangle(75, 75, 40, 60);
+            break;
+        case 4:
+            obj = new Rhombus(150, 150, 40, 60);
+            break;
+        case 5:
+            obj = new Square(50, 50, 30);
+            break;
+        case 6:
+            obj = new Parallelogram(75, 75, 40, 60);
+            break;
+        default:
+            std::cout << "Invalid choice.\n";
+            return 1;
     }
 
+    obj->display();
+
+    std::cout << "What do you want to do?\n";
+    std::cout << "1. Move\n2. Rotate\n";
+    std::cin >> action;
+
+    if (action == 1) {
+        int dx, dy;
+        std::cout << "Enter dx and dy: ";
+        std::cin >> dx >> dy;
+        obj->move(dx, dy);
+        obj->display();
+    } else if (action == 2) {
+        double angle;
+        std::cout << "Enter angle (in degrees): ";
+        std::cin >> angle;
+        obj->rotate(angle);
+    } else {
+        std::cout << "Invalid choice.\n";
+    }
+
+    obj->remove();
+    delete obj;
     return 0;
 }
