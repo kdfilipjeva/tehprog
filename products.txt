@@ -1,0 +1,103 @@
+001,silver,120,metall,metal(silver)
+Хорошо, вот 99 новых записей товаров для вашего онлайн-магазина:
+
+001,pencil,0.5,office,basic stationery
+002,notebook,2.99,office,writing supplies
+003,eraser,0.75,office,stationery
+004,pen,1.25,office,writing instruments
+005,stapler,5.99,office,desk accessories
+006,paperclips,1.50,office,stationery
+007,highlighter,2.25,office,writing tools
+008,scissors,3.75,office,desk tools
+009,ruler,1.99,office,measurement
+010,marker,2.50,office,writing
+011,glue stick,2.75,office,adhesives
+012,binder clips,3.99,office,desk accessories
+013,tape dispenser,6.50,office,desk tools
+014,calculator,9.99,office,electronics
+015,hole punch,4.25,office,desk tools
+016,sharpener,1.75,office,stationery
+017,sticky notes,3.50,office,writing supplies
+018,index cards,2.99,office,writing supplies
+019,envelopes,4.75,office,stationery
+020,printer paper,7.99,office,office supplies
+021,backpack,29.99,bags,luggage
+022,suitcase,59.99,bags,luggage
+023,messenger bag,39.99,bags,accessories
+024,laptop bag,49.99,bags,electronics
+025,gym bag,24.99,bags,sports
+026,tote bag,19.99,bags,accessories
+027,briefcase,69.99,bags,business
+028,duffel bag,34.99,bags,travel
+029,crossbody bag,29.99,bags,accessories
+030,clutch,14.99,bags,accessories
+031,shampoo,5.99,personal care,hair
+032,conditioner,6.99,personal care,hair
+033,body wash,7.99,personal care,bath
+034,deodorant,4.50,personal care,hygiene
+035,toothpaste,3.75,personal care,oral
+036,lotion,8.99,personal care,skin
+037,makeup remover,9.99,personal care,cosmetics
+038,sunscreen,11.99,personal care,skincare
+039,cotton swabs,2.25,personal care,hygiene
+040,tampons,6.99,personal care,feminine
+041,t-shirt,14.99,clothing,tops
+042,jeans,39.99,clothing,bottoms
+043,sweater,24.99,clothing,tops
+044,dress,29.99,clothing,dresses
+045,socks,5.99,clothing,accessories
+046,shoes,49.99,clothing,footwear
+047,jacket,59.99,clothing,outerwear
+048,hat,12.99,clothing,accessories
+049,scarf,16.99,clothing,accessories
+050,gloves,9.99,clothing,accessories
+051,car,25000,automotive,vehicles
+052,bicycle,399.99,automotive,vehicles
+053,motorcycle,7999.99,automotive,vehicles
+054,skateboard,79.99,automotive,vehicles
+055,scooter,199.99,automotive,vehicles
+056,hoverboard,299.99,automotive,vehicles
+057,kayak,499.99,outdoor,sports
+058,tent,99.99,outdoor,camping
+059,sleeping bag,59.99,outdoor,camping
+060,hiking backpack,149.99,outdoor,gear
+061,binoculars,89.99,outdoor,optics
+062,fishing rod,79.99,outdoor,sports
+063,camping stove,49.99,outdoor,cooking
+064,cooler,39.99,outdoor,storage
+065,frisbee,9.99,outdoor,sports
+066,volleyball,24.99,outdoor,sports
+067,basketball,29.99,outdoor,sports
+068,football,34.99,outdoor,sports
+069,soccer ball,24.99,outdoor,sports
+070,tennis racket,59.99,outdoor,sports
+071,golf clubs,399.99,outdoor,sports
+072,yoga mat,29.99,fitness,exercise
+073,resistance bands,14.99,fitness,exercise
+074,kettlebell,49.99,fitness,exercise
+075,exercise bike,299.99,fitness,equipment
+076,treadmill,599.99,fitness,equipment
+077,dumbbell set,99.99,fitness,exercise
+078,jump rope,9.99,fitness,exercise
+079,medicine ball,39.99,fitness,exercise
+080,foam roller,24.99,fitness,recovery
+081,blender,79.99,kitchen,appliances
+082,coffee maker,59.99,kitchen,appliances
+083,toaster oven,99.99,kitchen,appliances
+084,slow cooker,49.99,kitchen,appliances
+085,food processor,129.99,kitchen,appliances
+086,air fryer,99.99,kitchen,appliances
+087,instant pot,99.99,kitchen,appliances
+088,mixer,99.99,kitchen,appliances
+089,juicer,89.99,kitchen,appliances
+090,pressure cooker,79.99,kitchen,appliances
+091,cutting board,14.99,kitchen,tools
+092,chef's knife,49.99,kitchen,tools
+093,baking sheet,19.99,kitchen,tools
+094,mixing bowls,24.99,kitchen,tools
+095,measuring cups,9.99,kitchen,tools
+096,spatula,6.99,kitchen,tools
+097,whisk,8.99,kitchen,tools
+098,rolling pin,12.99,kitchen,tools
+099,can opener,7.99,kitchen,tools
+100,dish towels,12.99,kitchen,textiles
